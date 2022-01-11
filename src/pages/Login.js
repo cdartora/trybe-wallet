@@ -24,8 +24,8 @@ class Login extends React.Component {
     const minCharacters = 6;
 
     const errorCases = [
-      // eslint-disable-next-line max-len
-      !email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+      !email.includes('@'),
+      !email.includes('.'),
       senha.length < minCharacters,
     ];
 
