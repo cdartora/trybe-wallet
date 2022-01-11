@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { addExpense } from '../actions';
 import './ExpenseForm.css';
 
@@ -36,7 +37,7 @@ class ExpenseForm extends Component {
     } = this.state;
 
     const {
-      addExpense,
+      onButtonClick,
     } = this.props;
 
     return (
@@ -109,7 +110,7 @@ class ExpenseForm extends Component {
 
         <button
           type="button"
-          onClick={ () => addExpense(this.state) }
+          onClick={ () => onButtonClick(this.state) }
         >
           adicionar despesa
         </button>
@@ -119,7 +120,11 @@ class ExpenseForm extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addExpense: (expense) => dispatch(addExpense(expense)),
+  onButtonClick: (expense) => dispatch(addExpense(expense)),
 });
 
 export default connect(null, mapDispatchToProps)(ExpenseForm);
+
+ExpenseForm.propTypes = {
+  onButtonClick: PropTypes.func.isRequired,
+};
