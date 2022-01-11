@@ -1,7 +1,7 @@
 .expense-form-container {
-  height: 4em;
-  display: flex;
   align-items: center;
+  display: flex;
+  height: 4em;
   justify-content: space-evenly;
 }
 

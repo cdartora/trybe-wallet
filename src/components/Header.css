@@ -1,11 +1,11 @@
 .container-header {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
   align-items: center;
-  width: 100%;
-  height: 60px;
   border-bottom: 1px solid #313131;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .title-container {
@@ -13,30 +13,30 @@
 }
 
 .content-container {
-  display: flex;
   align-items: center;
+  display: flex;
   margin-right: 20px;
 }
 
 .user-container {
-  display: flex;
   align-items: center;
+  display: flex;
   margin-right: 20px;
 }
 
 .currency-container {
+  align-items: center;
   background-color: #313131;
-  padding: 0 10px;
-  height: 2em;
   border-radius: 20px;
   display: flex;
-  align-items: center;
+  height: 2em;
+  padding: 0 10px;
 }
 
 .currency-container p {
   color: white;
-  margin-top: 0;
   margin-bottom: 0;
+  margin-top: 0;
 }
 
 .total {
@@ -44,7 +44,7 @@
 }
 
 img {
-  width: 2em;
   height: 2em;
   margin-right: 5px;
+  width: 2em;
 }
