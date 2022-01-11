@@ -37,16 +37,19 @@ label {
   color: #313131;
 }
 
-input {
+input,
+select {
   border-radius: 0;
   border-top: 0px;
   border-right: 0px;
   border-left: 0px;
   margin-top: 5px;
   height: 20px;
+  font-family: inherit;
 }
 
-input:focus {
+input:focus,
+select:focus {
   outline: none;
 }
 

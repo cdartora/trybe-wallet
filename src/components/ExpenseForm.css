@@ -1,0 +1,14 @@
+.expense-form-container {
+  height: 4em;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+select {
+  height: 2em;
+}
+
+button {
+  margin-top: 0;
+}
