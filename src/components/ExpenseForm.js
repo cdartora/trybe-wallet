@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addExpense } from '../actions';
 import './ExpenseForm.css';
 
 class ExpenseForm extends Component {
@@ -33,6 +34,10 @@ class ExpenseForm extends Component {
       método,
       tag,
     } = this.state;
+
+    const {
+      addExpense,
+    } = this.props;
 
     return (
       <div className="expense-form-container">
@@ -102,7 +107,10 @@ class ExpenseForm extends Component {
           <option value="saude">saúde</option>
         </select>
 
-        <button type="button">
+        <button
+          type="button"
+          onClick={ () => addExpense(this.state) }
+        >
           adicionar despesa
         </button>
       </div>
@@ -111,9 +119,7 @@ class ExpenseForm extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addExpense: (expense) => dispatch(expense),
-  removeExpense: (id) => dispatch(id),
-  editExpense: (value, id) => dispatch(value, id),
+  addExpense: (expense) => dispatch(addExpense(expense)),
 });
 
 export default connect(null, mapDispatchToProps)(ExpenseForm);
