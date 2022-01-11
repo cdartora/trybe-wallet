@@ -1,0 +1,67 @@
+.container-login {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", "sans-serif";
+  background-color: #fcfcfc;
+}
+
+.login-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 30px;
+  height: 20em;
+  width: 20em;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+  border-radius: 5px;
+  background-color: white;
+  font-family: inherit;
+}
+
+h1 {
+  color: #313131;
+}
+
+.wallet {
+  color: #818181;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 70%;
+  color: #313131;
+}
+
+input {
+  border-radius: 0;
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+  margin-top: 5px;
+  height: 20px;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  margin-top: 15px;
+  border: 1px solid #818181;
+  width: 11.5em;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: white;
+  font-family: inherit;
+}
+
+button:hover {
+  box-shadow: rgba(129, 129, 151, 0.25) 0px 2px 7px -1px inset,
+    rgba(133, 133, 133, 0.3) 0px 2px 4px -2px inset;
+}
