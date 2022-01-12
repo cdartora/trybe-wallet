@@ -93,17 +93,15 @@ class ExpenseForm extends Component {
           aria-label="moeda"
         >
           {
-            currencies ? Object.keys(currencies).map((key) => (
-              key !== 'USDT' ? (
-                <option
-                  key={ key }
-                  data-testid={ key }
-                  name={ key }
-                >
-                  {key}
-                </option>
-              ) : null
-            )) : null
+            currencies.map((key) => (
+              <option
+                key={ key }
+                data-testid={ key }
+                name={ key }
+              >
+                {key}
+              </option>
+            ))
           }
         </select>
 
@@ -151,7 +149,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   id: state.wallet.expenses.length,
-  currencies: state.wallet.currencies,
+  currencies: state.wallet.currencies || ['BRL'],
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
@@ -159,10 +157,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
 ExpenseForm.propTypes = {
   onButtonClick: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
-  currencies: PropTypes.objectOf(PropTypes.object.isRequired),
+  currencies: PropTypes.node.isRequired,
   fetchCurrency: PropTypes.func.isRequired,
-};
-
-ExpenseForm.defaultProps = {
-  currencies: undefined,
 };

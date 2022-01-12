@@ -31,7 +31,7 @@ export const fetchAPI = (payload) => (dispatch) => {
 export const fetchCurrencies = () => (dispatch) => {
   fetchHelper()
     .then(
-      (json) => dispatch(currencySucess(json)),
-      (error) => dispatch(errorFetching(error)),
-    );
+      (json) => Object.keys(json).filter((c) => c !== 'USDT'),
+    )
+    .then((coins) => dispatch(currencySucess(coins)));
 };

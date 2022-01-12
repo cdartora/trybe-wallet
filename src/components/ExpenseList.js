@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './ExpenseList.css';
+import DeleteButton from './DeleteButton';
 
 const headerValues = [
   'Descrição',
@@ -57,6 +58,9 @@ class ExpenseList extends Component {
                   </td>
                   <td>
                     Real
+                  </td>
+                  <td>
+                    <DeleteButton id={ expense.id } />
                   </td>
                 </tr>
               )) }
