@@ -9,7 +9,7 @@ class ExpenseList extends Component {
       <div>
         <ul>
           { expenses.map((expense) => (
-            <li key={ expense.id }>{expense.descrição}</li>
+            <li key={ expense.id }>{expense.value}</li>
           )) }
         </ul>
       </div>

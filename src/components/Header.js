@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import user from './user.png';
+import addTotal from '../helpers/addTotal';
 import './Header.css';
 
 class Header extends Component {
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
+
     return (
       <div className="container-header">
 
@@ -25,16 +27,15 @@ class Header extends Component {
           <div className="currency-container">
             <p
               className="currency"
-              data-testid="total-field"
+              data-testid="header-currency-field"
             >
               BRL
             </p>
             <p
               className="total"
-              data-testid="header-currency-field"
+              data-testid="total-field"
             >
-              0.0
-
+              {addTotal(expenses)}
             </p>
           </div>
         </div>
@@ -46,6 +47,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Header);

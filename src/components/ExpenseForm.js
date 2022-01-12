@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addExpense } from '../actions';
+import { fetchAPI, fetchCurrencies } from '../actions';
 import './ExpenseForm.css';
 
 class ExpenseForm extends Component {
@@ -9,14 +9,36 @@ class ExpenseForm extends Component {
     super();
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onClickHandler = this.onClickHandler.bind(this);
 
     this.state = {
-      valor: '',
-      descrição: '',
-      moeda: '',
-      método: '',
-      tag: '',
+      id: '',
+      value: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
     };
+  }
+
+  componentDidMount() {
+    const { fetchCurrency } = this.props;
+    fetchCurrency();
+  }
+
+  onClickHandler() {
+    const { id, onButtonClick } = this.props;
+
+    onButtonClick({ ...this.state, id });
+
+    this.setState({
+      id: '',
+      value: '',
+      currency: '',
+      method: '',
+      tag: '',
+      description: '',
+    });
   }
 
   onChangeHandler({ target }) {
@@ -29,22 +51,22 @@ class ExpenseForm extends Component {
 
   render() {
     const {
-      valor,
-      descrição,
-      moeda,
-      método,
+      value,
+      description,
+      currency,
+      method,
       tag,
     } = this.state;
 
     const {
-      onButtonClick,
+      currencies,
     } = this.props;
 
     return (
       <div className="expense-form-container">
         <input
-          name="valor"
-          value={ valor }
+          name="value"
+          value={ value }
           onChange={ this.onChangeHandler }
           type="number"
           placeholder="valor"
@@ -52,8 +74,8 @@ class ExpenseForm extends Component {
         />
 
         <input
-          name="descrição"
-          value={ descrição }
+          name="description"
+          value={ description }
           onChange={ this.onChangeHandler }
           type="text"
           placeholder="descrição"
@@ -61,38 +83,37 @@ class ExpenseForm extends Component {
         />
 
         <select
-          name="moeda"
-          value={ moeda }
+          name="currency"
+          value={ currency }
           onChange={ this.onChangeHandler }
           id="moeda"
           data-testid="currency-input"
         >
-          <option value="USD">USD</option>
-          <option value="CAD">CAD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-          <option value="ARS">ARS</option>
-          <option value="BTC">BTC</option>
-          <option value="LTC">LTC</option>
-          <option value="JPY">JPY</option>
-          <option value="CHF">CHF</option>
-          <option value="AUD">AUD</option>
-          <option value="CNY">CNY</option>
-          <option value="ILS">ILS</option>
-          <option value="ETH">ETH</option>
-          <option value="XRP">XRP</option>
+          {
+            currencies ? Object.keys(currencies).map((key) => (
+              key !== 'USDT' ? (
+                <option
+                  key={ key }
+                  data-testid={ key }
+                  name={ key }
+                >
+                  {key}
+                </option>
+              ) : null
+            )) : null
+          }
         </select>
 
         <select
-          name="método"
-          value={ método }
+          name="method"
+          value={ method }
           onChange={ this.onChangeHandler }
-          id="metodo"
+          id="method"
           data-testid="method-input"
         >
-          <option value="dinheiro">dinheiro</option>
-          <option value="crédito">crédito</option>
-          <option value="débito">débito</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
 
         <select
@@ -100,19 +121,20 @@ class ExpenseForm extends Component {
           value={ tag }
           onChange={ this.onChangeHandler }
           id="tag"
+          data-testid="tag-input"
         >
-          <option value="alimentacao">alimentação</option>
-          <option value="lazer">lazer</option>
-          <option value="trabalho">trabalho</option>
-          <option value="transporte">transporte</option>
-          <option value="saude">saúde</option>
+          <option value="Alimentacao">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
 
         <button
           type="button"
-          onClick={ () => onButtonClick(this.state) }
+          onClick={ this.onClickHandler }
         >
-          adicionar despesa
+          Adicionar despesa
         </button>
       </div>
     );
@@ -120,11 +142,23 @@ class ExpenseForm extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onButtonClick: (expense) => dispatch(addExpense(expense)),
+  onButtonClick: (expense) => dispatch(fetchAPI(expense)),
+  fetchCurrency: () => dispatch(fetchCurrencies()),
 });
 
-export default connect(null, mapDispatchToProps)(ExpenseForm);
+const mapStateToProps = (state) => ({
+  id: state.wallet.expenses.length,
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
 
 ExpenseForm.propTypes = {
   onButtonClick: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  currencies: PropTypes.objectOf(PropTypes.object.isRequired),
+};
+
+ExpenseForm.defaultProps = {
+  currencies: undefined,
 };

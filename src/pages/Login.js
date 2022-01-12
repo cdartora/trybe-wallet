@@ -25,7 +25,7 @@ class Login extends React.Component {
 
     const errorCases = [
       !email.includes('@'),
-      !email.includes('.'),
+      !email.includes('.com'),
       senha.length < minCharacters,
     ];
 
