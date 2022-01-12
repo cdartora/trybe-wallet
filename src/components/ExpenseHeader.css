@@ -1,0 +1,11 @@
+.expense-header-container {
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: space-around;
+  margin: 0 20px;
+  padding: 0 20px;
+}
+
+.expense-header-container p {
+  margin: 5px 2px;
+}

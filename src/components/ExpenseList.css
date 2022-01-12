@@ -1,0 +1,12 @@
+.expenses-list-container {
+  padding: 30px;
+}
+
+.expenses-list-container li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.even {
+  background-color: #f1f1f1;
+}

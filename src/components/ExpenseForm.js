@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { fetchAPI, fetchCurrencies } from '../actions';
 import './ExpenseForm.css';
 
+const alimentação = 'Alimentação';
+
 class ExpenseForm extends Component {
   constructor() {
     super();
@@ -16,7 +18,7 @@ class ExpenseForm extends Component {
       value: '',
       currency: 'USD',
       method: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: alimentação,
       description: '',
     };
   }
@@ -34,9 +36,9 @@ class ExpenseForm extends Component {
     this.setState({
       id: '',
       value: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       description: '',
     });
   }
@@ -88,6 +90,7 @@ class ExpenseForm extends Component {
           onChange={ this.onChangeHandler }
           id="moeda"
           data-testid="currency-input"
+          aria-label="moeda"
         >
           {
             currencies ? Object.keys(currencies).map((key) => (
@@ -123,7 +126,7 @@ class ExpenseForm extends Component {
           id="tag"
           data-testid="tag-input"
         >
-          <option value="Alimentacao">Alimentação</option>
+          <option value={ alimentação }>{alimentação}</option>
           <option value="Lazer">Lazer</option>
           <option value="Trabalho">Trabalho</option>
           <option value="Transporte">Transporte</option>

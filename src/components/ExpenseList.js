@@ -1,17 +1,68 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import './ExpenseList.css';
+
+const headerValues = [
+  'Descrição',
+  'Tag',
+  'Método de pagamento',
+  'Valor',
+  'Moeda',
+  'Câmbio utilizado',
+  'Valor convertido',
+  'Moeda de conversão',
+  'Editar/Excluir',
+];
 
 class ExpenseList extends Component {
   render() {
     const { expenses } = this.props;
     return (
       <div>
-        <ul>
-          { expenses.map((expense) => (
-            <li key={ expense.id }>{expense.value}</li>
-          )) }
-        </ul>
+        <div className="expenses-list-container">
+          <table width="100%">
+            <thead>
+              <tr>
+                {
+                  headerValues.map((h) => <th key={ h }>{h}</th>)
+                }
+              </tr>
+            </thead>
+            <tbody>
+              { expenses.map((expense, index) => (
+                <tr key={ expense.id } className={ index % 2 === 0 ? 'even' : 'odd' }>
+                  <td>
+                    {expense.description}
+                  </td>
+                  <td>
+                    {expense.tag}
+                  </td>
+                  <td>
+                    {expense.method}
+                  </td>
+                  <td>
+                    {`${expense.value}`}
+                  </td>
+                  <td>
+                    {expense.exchangeRates[expense.currency].name.split('/')[0]}
+                  </td>
+                  <td>
+                    {`${parseFloat(expense.exchangeRates[expense.currency].ask)
+                      .toFixed(2)}`}
+                  </td>
+                  <td>
+                    {`${(parseFloat(expense.value)
+                  * parseFloat(expense.exchangeRates[expense.currency].ask)).toFixed(2)}`}
+                  </td>
+                  <td>
+                    Real
+                  </td>
+                </tr>
+              )) }
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
