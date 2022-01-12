@@ -157,6 +157,7 @@ ExpenseForm.propTypes = {
   onButtonClick: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   currencies: PropTypes.objectOf(PropTypes.object.isRequired),
+  fetchCurrency: PropTypes.func.isRequired,
 };
 
 ExpenseForm.defaultProps = {

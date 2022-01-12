@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, REMOVE_EXPENSE, EDIT_EXPENSE, CURRENCY_SUCCESS } from '../actions';
+import { ADD_EXPENSE, CURRENCY_SUCCESS } from '../actions';
 
 const INITIAL_STATE = {
   expenses: [],

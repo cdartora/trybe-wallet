@@ -44,7 +44,6 @@ class Login extends React.Component {
 
   render() {
     const { email, senha, buttonIsEnabled } = this.state;
-    // eslint-disable-next-line react/prop-types
     const { userLogged, history } = this.props;
     return (
       <div className="container-login">
@@ -85,7 +84,6 @@ class Login extends React.Component {
             disabled={ !buttonIsEnabled }
             onClick={ () => {
               userLogged(email);
-              // eslint-disable-next-line react/prop-types
               history.push('/carteira');
             } }
           >
@@ -105,4 +103,5 @@ export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   userLogged: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(Object).isRequired,
 };
