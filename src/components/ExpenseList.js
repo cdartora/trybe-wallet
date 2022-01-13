@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './ExpenseList.css';
-import DeleteButton from './DeleteButton';
+import ExpenseRow from './ExpenseRow';
+import { activateEditMode } from '../actions';
 
 const headerValues = [
   'Descrição',
@@ -17,8 +18,21 @@ const headerValues = [
 ];
 
 class ExpenseList extends Component {
+  constructor() {
+    super();
+
+    this.changeEditMode = this.changeEditMode.bind(this);
+  }
+
+  changeEditMode(id) {
+    const { changeEditMode } = this.props;
+
+    changeEditMode(id);
+  }
+
   render() {
     const { expenses } = this.props;
+
     return (
       <div>
         <div className="expenses-list-container">
@@ -32,37 +46,12 @@ class ExpenseList extends Component {
             </thead>
             <tbody>
               { expenses.map((expense, index) => (
-                <tr key={ expense.id } className={ index % 2 === 0 ? 'even' : 'odd' }>
-                  <td>
-                    {expense.description}
-                  </td>
-                  <td>
-                    {expense.tag}
-                  </td>
-                  <td>
-                    {expense.method}
-                  </td>
-                  <td>
-                    {`${expense.value}`}
-                  </td>
-                  <td>
-                    {expense.exchangeRates[expense.currency].name.split('/')[0]}
-                  </td>
-                  <td>
-                    {`${parseFloat(expense.exchangeRates[expense.currency].ask)
-                      .toFixed(2)}`}
-                  </td>
-                  <td>
-                    {`${(parseFloat(expense.value)
-                  * parseFloat(expense.exchangeRates[expense.currency].ask)).toFixed(2)}`}
-                  </td>
-                  <td>
-                    Real
-                  </td>
-                  <td>
-                    <DeleteButton id={ expense.id } />
-                  </td>
-                </tr>
+                <ExpenseRow
+                  expense={ expense }
+                  editMode={ this.changeEditMode }
+                  index={ index }
+                  key={ index }
+                />
               )) }
             </tbody>
           </table>
@@ -72,12 +61,17 @@ class ExpenseList extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  changeEditMode: (id) => dispatch(activateEditMode(id)),
+});
+
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(ExpenseList);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseList);
 
 ExpenseList.propTypes = {
   expenses: PropTypes.arrayOf(Object).isRequired,
+  changeEditMode: PropTypes.func.isRequired,
 };

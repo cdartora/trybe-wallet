@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { editExpense } from '../actions';
 
 class EditButton extends Component {
   render() {
-    const { onClickHandler, id } = this.props;
+    const { onClick, id } = this.props;
     return (
-      <button type="button" onClick={ () => onClickHandler(id) } data-testid="delete-btn">
-        X
+      <button
+        type="button"
+        onClick={ () => onClick(id) }
+        data-testid="edit-btn"
+      >
+        Edit
       </button>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onClickHandler: (id) => dispatch(editExpense(id)),
-});
-
-export default connect(null, mapDispatchToProps)(EditButton);
+export default (EditButton);
 
 EditButton.propTypes = {
-  onClickHandler: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
 };

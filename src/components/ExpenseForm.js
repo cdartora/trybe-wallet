@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchAPI, fetchCurrencies } from '../actions';
+import { editExpense, fetchAPI, fetchCurrencies } from '../actions';
 import './ExpenseForm.css';
 
 const alimentação = 'Alimentação';
@@ -11,6 +11,7 @@ class ExpenseForm extends Component {
     super();
 
     this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onEditHandler = this.onEditHandler.bind(this);
     this.onClickHandler = this.onClickHandler.bind(this);
 
     this.state = {
@@ -43,6 +44,12 @@ class ExpenseForm extends Component {
     });
   }
 
+  onEditHandler(id) {
+    const { edit } = this.props;
+
+    edit(id, { ...this.state });
+  }
+
   onChangeHandler({ target }) {
     const { name, value } = target;
 
@@ -62,6 +69,7 @@ class ExpenseForm extends Component {
 
     const {
       currencies,
+      editModeId,
     } = this.props;
 
     return (
@@ -131,12 +139,23 @@ class ExpenseForm extends Component {
           <option value="Saúde">Saúde</option>
         </select>
 
-        <button
-          type="button"
-          onClick={ this.onClickHandler }
-        >
-          Adicionar despesa
-        </button>
+        {
+          (editModeId >= 0) ? (
+            <button
+              type="button"
+              onClick={ () => this.onEditHandler(editModeId) }
+            >
+              Editar despesa
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={ this.onClickHandler }
+            >
+              Adicionar despesa
+            </button>
+          )
+        }
       </div>
     );
   }
@@ -145,11 +164,13 @@ class ExpenseForm extends Component {
 const mapDispatchToProps = (dispatch) => ({
   onButtonClick: (expense) => dispatch(fetchAPI(expense)),
   fetchCurrency: () => dispatch(fetchCurrencies()),
+  edit: (id, paylaod) => dispatch(editExpense(id, paylaod)),
 });
 
 const mapStateToProps = (state) => ({
   id: state.wallet.expenses.length,
   currencies: state.wallet.currencies || ['BRL'],
+  editModeId: state.wallet.editModeId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
@@ -157,6 +178,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
 ExpenseForm.propTypes = {
   onButtonClick: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
+  edit: PropTypes.func.isRequired,
+  editModeId: PropTypes.number.isRequired,
   currencies: PropTypes.node.isRequired,
   fetchCurrency: PropTypes.func.isRequired,
 };
